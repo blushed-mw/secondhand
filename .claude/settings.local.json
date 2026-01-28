@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__supabase__list_tables",
+      "mcp__supabase__get_project_url",
+      "mcp__supabase__search_docs",
+      "Bash(npx create-next-app:*)",
+      "Bash(taskkill:*)",
+      "Bash(npm install @supabase/supabase-js @supabase/ssr)",
+      "mcp__supabase__get_publishable_keys",
+      "mcp__supabase__apply_migration"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "supabase"
+  ]
+}
