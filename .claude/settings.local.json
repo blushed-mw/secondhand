@@ -8,7 +8,9 @@
       "Bash(taskkill:*)",
       "Bash(npm install @supabase/supabase-js @supabase/ssr)",
       "mcp__supabase__get_publishable_keys",
-      "mcp__supabase__apply_migration"
+      "mcp__supabase__apply_migration",
+      "Bash(npm run build:*)",
+      "Bash(npm run dev)"
     ]
   },
   "enableAllProjectMcpServers": true,
