@@ -207,6 +207,9 @@ export async function getCategories() {
   return data || []
 }
 
+const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024 // 5MB
+
 export async function uploadProductImage(formData: FormData) {
   const supabase = await createClient()
 
@@ -220,7 +223,21 @@ export async function uploadProductImage(formData: FormData) {
     return { error: '파일이 없습니다.' }
   }
 
-  const fileExt = file.name.split('.').pop()
+  // 서버 사이드 파일 유효성 검사
+  if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
+    return { error: '지원하지 않는 파일 형식입니다. (JPG, PNG, GIF, WebP만 가능)' }
+  }
+
+  if (file.size > MAX_IMAGE_SIZE) {
+    return { error: '파일 크기가 너무 큽니다. (최대 5MB)' }
+  }
+
+  const fileExt = file.name.split('.').pop()?.toLowerCase()
+  const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp']
+  if (!fileExt || !allowedExtensions.includes(fileExt)) {
+    return { error: '지원하지 않는 파일 확장자입니다.' }
+  }
+
   const fileName = `${user.id}/${Date.now()}.${fileExt}`
 
   const { error } = await supabase.storage

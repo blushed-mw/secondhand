@@ -60,6 +60,9 @@ export default function Header({ profile }: HeaderProps) {
                 <Link href="/products/new">
                   <Button size="sm">판매하기</Button>
                 </Link>
+                <Link href="/chat">
+                  <Button variant="ghost" size="sm">채팅</Button>
+                </Link>
                 <Link href="/my">
                   <Button variant="ghost" size="sm">
                     {profile.nickname}

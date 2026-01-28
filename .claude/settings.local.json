@@ -10,7 +10,12 @@
       "mcp__supabase__get_publishable_keys",
       "mcp__supabase__apply_migration",
       "Bash(npm run build:*)",
-      "Bash(npm run dev)"
+      "Bash(npm run dev)",
+      "mcp__supabase__get_logs",
+      "Bash(ls -la \"C:\\\\Workspace\\\\secondhand\\\\src\\\\app\\\\products\"\" 2>/dev/null || echo \"products dir not found \")",
+      "mcp__supabase__list_extensions",
+      "mcp__supabase__list_migrations",
+      "mcp__supabase__get_advisors"
     ]
   },
   "enableAllProjectMcpServers": true,

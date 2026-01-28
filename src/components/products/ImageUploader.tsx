@@ -4,6 +4,20 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { uploadProductImage } from '@/actions/products'
 
+const ACCEPTED_FORMATS = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
+const ACCEPTED_EXTENSIONS = '.jpg,.jpeg,.png,.gif,.webp'
+const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
+
+function validateFile(file: File): string | null {
+  if (!ACCEPTED_FORMATS.includes(file.type)) {
+    return '지원하지 않는 파일 형식입니다. (JPG, PNG, GIF, WebP만 가능)'
+  }
+  if (file.size > MAX_FILE_SIZE) {
+    return '파일 크기가 너무 큽니다. (최대 5MB)'
+  }
+  return null
+}
+
 interface ImageUploaderProps {
   images: string[]
   onChange: (images: string[]) => void
@@ -24,6 +38,12 @@ export default function ImageUploader({ images, onChange, maxImages = 5 }: Image
 
       for (const file of Array.from(files)) {
         if (images.length + newImages.length >= maxImages) break
+
+        const validationError = validateFile(file)
+        if (validationError) {
+          alert(validationError)
+          continue
+        }
 
         const formData = new FormData()
         formData.append('file', file)
@@ -53,7 +73,10 @@ export default function ImageUploader({ images, onChange, maxImages = 5 }: Image
       <label className="block text-sm font-medium text-gray-700">
         상품 이미지 ({images.length}/{maxImages})
       </label>
-      <div className="flex flex-wrap gap-3">
+      <p className="text-xs text-gray-500 mt-1">
+        JPG, PNG, GIF, WebP / 최대 {maxImages}장 / 파일당 최대 5MB
+      </p>
+      <div className="flex flex-wrap gap-3 mt-2">
         {images.map((image, index) => (
           <div key={index} className="relative w-24 h-24 rounded-lg overflow-hidden border border-gray-200">
             <Image
@@ -95,7 +118,7 @@ export default function ImageUploader({ images, onChange, maxImages = 5 }: Image
             )}
             <input
               type="file"
-              accept="image/*"
+              accept={ACCEPTED_EXTENSIONS}
               multiple
               onChange={handleUpload}
               className="hidden"

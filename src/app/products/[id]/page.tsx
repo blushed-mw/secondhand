@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import DeleteButton from './DeleteButton'
+import ChatButton from '@/components/chat/ChatButton'
 
 interface Props {
   params: Promise<{ id: string }>
@@ -128,6 +129,13 @@ export default async function ProductDetailPage({ params }: Props) {
                 <p className="font-medium">{product.seller?.nickname}</p>
               </div>
             </div>
+            {!isOwner && (
+              <ChatButton
+                sellerId={product.seller_id}
+                productId={product.id}
+                isLoggedIn={!!user}
+              />
+            )}
           </div>
 
           {/* 상품 정보 */}
